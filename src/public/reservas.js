@@ -39,11 +39,14 @@ async function carregarReservas() {
     reservas.forEach(r => {
       const linha = document.createElement("tr");
 
+      // Substitui LivroId por ISBN
+      const isbn = r.ISBN || "(Sem ISBN)";
+
       if (r.Status.toLowerCase() === "ativa") {
         linha.innerHTML = `
           <td>${r.Id}</td>
           <td>${r.Titulo || "(Sem título)"}</td>
-          <td>${r.LivroId}</td>
+          <td>${isbn}</td>
           <td>${r.Status}</td>
           <td><button class="cancelar" onclick="cancelarReserva(${r.Id})">Cancelar</button></td>
         `;
@@ -53,7 +56,7 @@ async function carregarReservas() {
         linha.innerHTML = `
           <td>${r.Id}</td>
           <td>${r.Titulo || "(Sem título)"}</td>
-          <td>${r.LivroId}</td>
+          <td>${isbn}</td>
           <td>${r.Status}</td>
           <td>${r.DataReserva ? new Date(r.DataReserva).toLocaleDateString() : "-"}</td>
         `;

@@ -27,14 +27,13 @@ async function cancelar(id) {
 // Listar reservas de um usuário
 async function listarPorUsuario(usuarioId) {
   const request = new mssql.Request();
-  const result = await request
-    .input("usuarioId", mssql.Int, usuarioId)
-    .query(`
-      SELECT r.Id, l.Titulo, r.DataReserva, r.Status
-      FROM Reservas r
-      JOIN Livros l ON r.LivroId = l.Id
-      WHERE r.UsuarioId = @usuarioId
-    `);
+  await request.input("UsuarioId", mssql.Int, usuarioId);
+  const result = await request.query(`
+    SELECT r.Id, l.Titulo, l.ISBN, r.DataReserva, r.Status
+    FROM Reservas r
+    JOIN Livros l ON r.LivroId = l.Id
+    WHERE r.UsuarioId = @UsuarioId
+  `);
   return result.recordset;
 }
 
