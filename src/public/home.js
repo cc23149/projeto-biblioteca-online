@@ -1,9 +1,14 @@
+// URL base da API
 const API = "http://localhost:8081";
+
+// Recupera as informações do usuário e o token do localStorage
 const usuario = JSON.parse(localStorage.getItem("usuario"));
 const token = localStorage.getItem("token");
 
+// Quando a página é carregada, busca os livros
 document.addEventListener("DOMContentLoaded", carregarLivros);
 
+// 🔹 Função para listar todos os livros
 async function carregarLivros() {
   try {
     const resposta = await fetch(`${API}/livros`);
@@ -12,11 +17,13 @@ async function carregarLivros() {
     const corpoTabela = document.getElementById("corpoTabela");
     corpoTabela.innerHTML = "";
 
+    // Caso não haja livros cadastrados
     if (!livros.length) {
       corpoTabela.innerHTML = "<tr><td colspan='6'>Nenhum livro encontrado.</td></tr>";
       return;
     }
 
+    // Cria dinamicamente as linhas da tabela com os livros
     livros.forEach(livro => {
       const linha = document.createElement("tr");
       linha.innerHTML = `
@@ -35,13 +42,15 @@ async function carregarLivros() {
       `;
       corpoTabela.appendChild(linha);
     });
-  } catch (erro) {
+  } catch {
     mostrarMensagem("Erro ao carregar livros.", true);
   }
 }
 
+// 🔹 Buscar livros por título
 async function buscarLivro() {
   const titulo = document.getElementById("tituloBusca").value.trim();
+
   if (!titulo) {
     mostrarMensagem("Digite um título para buscar.", true);
     return;
@@ -80,11 +89,12 @@ async function buscarLivro() {
       `;
       corpoTabela.appendChild(linha);
     });
-  } catch (erro) {
+  } catch {
     mostrarMensagem("Erro ao buscar livro.", true);
   }
 }
 
+// 🔹 Reservar um livro
 async function reservar(livroId) {
   if (!token) {
     alert("Você precisa fazer login para reservar.");
@@ -110,6 +120,7 @@ async function reservar(livroId) {
   }
 }
 
+// 🔹 Cancelar uma reserva
 async function cancelarReserva(livroId) {
   if (!token) {
     alert("Você precisa estar logado.");
@@ -129,6 +140,7 @@ async function cancelarReserva(livroId) {
   }
 }
 
+// 🔹 Exibir mensagens de feedback
 function mostrarMensagem(msg, erro = false) {
   const div = document.getElementById("mensagem");
   div.style.color = erro ? "red" : "green";

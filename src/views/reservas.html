@@ -11,11 +11,12 @@
     <h1>Biblioteca Online</h1>
     <nav>
       <a href="home.html">Home</a>
-      <a href="login.html">Sair</a>
+      <a href="login.html">Sair</a> <!-- O botão 'Sair' leva à tela de login -->
     </nav>
   </header>
 
   <main>
+    <!-- Tabela de reservas ativas -->
     <section style="margin-bottom: 30px;">
       <h2>Reservas Ativas</h2>
       <div class="tabela-container">
@@ -30,12 +31,14 @@
             </tr>
           </thead>
           <tbody id="corpoAtivas">
+            <!-- Conteúdo é carregado via reservas.js -->
             <tr><td colspan="5">Carregando...</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
+    <!-- Tabela de reservas concluídas ou canceladas -->
     <section>
       <h2>Reservas Canceladas / Concluídas</h2>
       <div class="tabela-container">
@@ -56,6 +59,7 @@
       </div>
     </section>
 
+    <!-- Mensagens de status e erro -->
     <div id="mensagem"></div>
   </main>
 
@@ -63,6 +67,7 @@
     <p>&copy; 2025 Biblioteca Online - COTUCA</p>
   </footer>
 
+  <!-- Script que carrega, exibe e cancela reservas -->
   <script src="../public/reservas.js"></script>
 </body>
 </html>

@@ -116,7 +116,8 @@ th {
 }
 
 /* ---------- Botões de ação ---------- */
-button.reservar, button.cancelar {
+button.reservar,
+button.cancelar {
   padding: 6px 10px;
   border: none;
   border-radius: 4px;
@@ -190,4 +191,3 @@ table {
 tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-

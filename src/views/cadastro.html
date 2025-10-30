@@ -4,32 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro - Biblioteca Online</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"> <!-- Importa o CSS principal -->
 </head>
 <body>
+  <!-- Cabeçalho fixo da página -->
   <header>
     <h1>Cadastro</h1>
     <nav>
+      <!-- Links de navegação -->
       <a href="home.html">Home</a>
       <a href="login.html">Login</a>
     </nav>
   </header>
 
+  <!-- Conteúdo principal -->
   <main>
+    <!-- Formulário de cadastro de novo usuário -->
     <form id="formCadastro">
       <h2>Crie sua conta</h2>
+      <!-- Campos de entrada obrigatórios -->
       <input type="text" id="nome" placeholder="Nome completo" required>
       <input type="email" id="email" placeholder="E-mail" required>
       <input type="password" id="senha" placeholder="Senha" required>
       <button type="submit">Cadastrar</button>
-      <p id="mensagem"></p>
+      <p id="mensagem"></p> <!-- Mostra mensagens de erro ou sucesso -->
     </form>
   </main>
 
+  <!-- Rodapé fixo -->
   <footer>
     <p>&copy; 2025 Biblioteca Online - COTUCA</p>
   </footer>
 
+  <!-- Script responsável pela lógica de cadastro -->
   <script src="../public/cadastro.js"></script>
 </body>
 </html>

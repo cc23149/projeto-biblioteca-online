@@ -10,6 +10,7 @@
   <header>
     <h1>Biblioteca Online</h1>
     <nav>
+      <!-- Links principais da aplicação -->
       <a href="home.html">Home</a>
       <a href="login.html">Login</a>
       <a href="cadastro.html">Cadastro</a>
@@ -18,12 +19,14 @@
   </header>
 
   <main>
+    <!-- Campo de busca de livros -->
     <section class="busca">
       <h2>Consultar Livro por Título</h2>
       <input type="text" id="tituloBusca" placeholder="Digite o título do livro...">
       <button onclick="buscarLivro()">Buscar</button>
     </section>
 
+    <!-- Catálogo de livros carregado pela API -->
     <section class="catalogo">
       <h2>Catálogo de Livros</h2>
       <table id="tabelaLivros">
@@ -38,18 +41,20 @@
           </tr>
         </thead>
         <tbody id="corpoTabela">
+          <!-- Linhas são geradas dinamicamente pelo home.js -->
           <tr><td colspan="6">Carregando livros...</td></tr>
         </tbody>
       </table>
     </section>
 
-    <section id="mensagem"></section>
+    <section id="mensagem"></section> <!-- Mensagens de status -->
   </main>
 
   <footer>
     <p>&copy; 2025 Biblioteca Online - COTUCA</p>
   </footer>
 
+  <!-- Script que carrega e manipula os livros -->
   <script src="../public/home.js"></script>
 </body>
 </html>
