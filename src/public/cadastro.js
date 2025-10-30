@@ -13,7 +13,7 @@ document.getElementById("formCadastro").addEventListener("submit", async e => {
   }
 
   try {
-    const resposta = await fetch(`${API}/usuario`, {
+    const resposta = await fetch(`${API}/usuarios`, { 
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nome, email, senha })
