@@ -2,7 +2,7 @@ const { mssql } = require("../config/db");
 
 // Listar todos os livros
 async function listar() {
-  const result = await mssql.query`SELECT * FROM Livros`;
+  const result = await mssql.query`SELECT * FROM dbo.Livros;`;
   return result.recordset;
 }
 
