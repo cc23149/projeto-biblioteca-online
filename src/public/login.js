@@ -7,7 +7,7 @@ document.getElementById("formLogin").addEventListener("submit", async e => {
   const senha = document.getElementById("senha").value.trim();
 
   try {
-    const resposta = await fetch(`${API}/usuario/login`, {
+    const resposta = await fetch(`${API}/usuarios/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, senha })

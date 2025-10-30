@@ -12,46 +12,87 @@ async function carregarReservas() {
   }
 
   try {
-    const resposta = await fetch(`${API}/reserva?usuarioId=${usuario.id}`, {
+    const resposta = await fetch(`${API}/reservas?usuarioId=${usuario.id}`, {
       headers: { "Authorization": `Bearer ${token}` }
     });
 
-    const reservas = await resposta.json();
-    const container = document.getElementById("listaReservas");
-    container.innerHTML = "";
+    if (!resposta.ok) {
+      throw new Error("Erro ao buscar reservas.");
+    }
 
-    if (reservas.length === 0) {
-      container.innerHTML = "<p>Você não possui reservas ativas.</p>";
+    const reservas = await resposta.json();
+
+    const corpoAtivas = document.getElementById("corpoAtivas");
+    const corpoInativas = document.getElementById("corpoInativas");
+    corpoAtivas.innerHTML = "";
+    corpoInativas.innerHTML = "";
+
+    if (!reservas || reservas.length === 0) {
+      corpoAtivas.innerHTML = "<tr><td colspan='5'>Você não possui reservas.</td></tr>";
+      corpoInativas.innerHTML = "<tr><td colspan='5'>Nenhuma reserva cancelada ou concluída.</td></tr>";
       return;
     }
 
+    let temAtiva = false;
+    let temInativa = false;
+
     reservas.forEach(r => {
-      const div = document.createElement("div");
-      div.classList.add("reserva-card");
-      div.innerHTML = `
-        <p><strong>ID:</strong> ${r.Id}</p>
-        <p><strong>Livro ID:</strong> ${r.LivroId}</p>
-        <p><strong>Status:</strong> ${r.Status}</p>
-        <button onclick="cancelarReserva(${r.Id})">Cancelar</button>
-      `;
-      container.appendChild(div);
+      const linha = document.createElement("tr");
+
+      if (r.Status.toLowerCase() === "ativa") {
+        linha.innerHTML = `
+          <td>${r.Id}</td>
+          <td>${r.Titulo || "(Sem título)"}</td>
+          <td>${r.LivroId}</td>
+          <td>${r.Status}</td>
+          <td><button class="cancelar" onclick="cancelarReserva(${r.Id})">Cancelar</button></td>
+        `;
+        corpoAtivas.appendChild(linha);
+        temAtiva = true;
+      } else {
+        linha.innerHTML = `
+          <td>${r.Id}</td>
+          <td>${r.Titulo || "(Sem título)"}</td>
+          <td>${r.LivroId}</td>
+          <td>${r.Status}</td>
+          <td>${r.DataReserva ? new Date(r.DataReserva).toLocaleDateString() : "-"}</td>
+        `;
+        corpoInativas.appendChild(linha);
+        temInativa = true;
+      }
     });
-  } catch {
-    alert("Erro ao carregar reservas.");
+
+    if (!temAtiva)
+      corpoAtivas.innerHTML = "<tr><td colspan='5'>Nenhuma reserva ativa.</td></tr>";
+
+    if (!temInativa)
+      corpoInativas.innerHTML = "<tr><td colspan='5'>Nenhuma reserva cancelada ou concluída.</td></tr>";
+
+  } catch (erro) {
+    mostrarMensagem("Erro ao carregar reservas.", true);
   }
 }
 
 async function cancelarReserva(id) {
+  if (!confirm("Tem certeza que deseja cancelar esta reserva?")) return;
+
   try {
-    const resposta = await fetch(`${API}/reserva/${id}`, {
+    const resposta = await fetch(`${API}/reservas/${id}`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${token}` }
     });
 
     const dados = await resposta.json();
-    alert(dados.mensagem || "Reserva cancelada!");
-    window.location.reload();
-  } catch {
-    alert("Erro ao cancelar reserva.");
+    mostrarMensagem(dados.mensagem || "Reserva cancelada com sucesso!");
+    carregarReservas();
+  } catch (erro) {
+    mostrarMensagem("Erro ao cancelar reserva.", true);
   }
+}
+
+function mostrarMensagem(msg, erro = false) {
+  const div = document.getElementById("mensagem");
+  div.style.color = erro ? "red" : "green";
+  div.textContent = msg;
+  setTimeout(() => (div.textContent = ""), 3000);
 }

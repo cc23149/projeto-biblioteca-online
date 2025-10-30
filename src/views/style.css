@@ -160,3 +160,34 @@ footer {
   width: 100%;
   font-size: 14px;
 }
+
+/* ---------- Estilo para a página de Reservas ---------- */
+section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+section h2 {
+  color: #003366;
+  border-bottom: 2px solid #003366;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.tabela-container {
+  overflow-x: auto;
+}
+
+table {
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
